@@ -4,7 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 from typing import List, Dict
 from tabulate import tabulate
-
+import copy
 import re
 
 errors = []
@@ -80,7 +80,9 @@ class Game:
                 if step != '':
                     steps.append({'step': step,
                                   'left': len(left_agents), 'left_set': len(set(left_agents)),
-                                  'right': len(right_agents), 'right_set': len(set(right_agents))})
+                                  'left_agents': copy.copy(left_agents),
+                                  'right': len(right_agents), 'right_set': len(set(right_agents)),
+                                  'right_agents': copy.copy(right_agents)})
                     left_agents.clear()
                     right_agents.clear()
 
@@ -89,26 +91,45 @@ class Game:
             agent = line[2].split('_')[-1]
             if agent != 'Coach' and agent != 'Coach:':
                 if team == left_team:
-                    left_agents.append(agent)
+                    left_agents.append(int(agent.replace(':', '')))
                 else:
-                    right_agents.append(agent)
+                    right_agents.append(int(agent.replace(':', '')))
+        left_kills = {}
+        for u in range(1, 12):
+            for index in range(len(steps) - 1, -1, -1):
+                if u in steps[index]['left_agents']:
+                    left_kills[u] = index
+                    break
+        left_counts = {}
+        for index in range(len(steps)):
+            left_counts[index] = len([i for i in left_kills.values() if i >= index])
+
+        right_kills = {}
+        for u in range(1, 12):
+            for index in range(len(steps) - 1, -1, -1):
+                if u in steps[index]['right_agents']:
+                    right_kills[u] = index
+                    break
+        right_counts = {}
+        for index in range(len(steps)):
+            right_counts[index] = len([i for i in right_kills.values() if i >= index])
         g.step_count = len(steps)
         index = 0
         found_hole = False
         while index < len(steps):
-            if (steps[index]['left'] == 11 and steps[index]['left_set'] == 11) or steps[index]['left_set'] < 11:
+            if (steps[index]['left'] == left_counts[index] and steps[index]['left_set'] == left_counts[index]) or steps[index]['left_set'] < left_counts[index]:
                 if found_hole:
                     g.hole_count += 1
                     g.left_hole_step_count += 1
                     g.left_hole_steps.append(steps[index]['step'])
-                if steps[index]['left_set'] < 11:
+                if steps[index]['left_set'] < left_counts[index]:
                     found_hole = True
                 else:
                     found_hole = False
                 index += 1
                 continue
 
-            if steps[index]['left'] > 11:
+            if steps[index]['left'] > left_counts[index]:
                 g.black_hole_count += 1
                 g.left_black_step_count += 1
                 g.left_black_hole_steps.append(steps[index]['step'])
@@ -119,18 +140,18 @@ class Game:
         index = 0
         found_hole = False
         while index < len(steps):
-            if (steps[index]['right'] == 11 and steps[index]['right_set'] == 11) or steps[index]['right_set'] < 11:
+            if (steps[index]['right'] == right_counts[index] and steps[index]['right_set'] == right_counts[index]) or steps[index]['right_set'] < right_counts[index]:
                 if found_hole:
                     g.hole_count += 1
                     g.right_hole_step_count += 1
                     g.right_hole_steps.append(steps[index]['step'])
-                if steps[index]['right_set'] < 11:
+                if steps[index]['right_set'] < right_counts[index]:
                     found_hole = True
                 else:
                     found_hole = False
                 index += 1
                 continue
-            if steps[index]['right'] > 11:
+            if steps[index]['right'] > right_counts[index]:
                 g.black_hole_count += 1
                 g.right_black_step_count += 1
                 g.right_black_hole_steps.append(steps[index]['step'])
@@ -298,12 +319,13 @@ class HoleAnalyzer:
             data[-1].append(v.hole_count)
             data[-1].append(v.black_hole_count)
             data[-1].append(v.black_hole_count + v.hole_count)
-        data.sort(key=lambda x: x[-1], reverse=True)
+        data.sort(key=lambda x: x[0], reverse=True)
         print(tabulate(data, headers=headers, tablefmt='orgtbl'))
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    h = HoleAnalyzer('./IranOpen2023', 30)
+    h = HoleAnalyzer('./sample_data', 1)
+    # h = HoleAnalyzer('./IranOpen2023', 30)
     # h = HoleAnalyzer('/home/nader/workspace/robo/SS2D-Docker-Tournament-Runner/log', 30)
     print(h)
     print(errors)
