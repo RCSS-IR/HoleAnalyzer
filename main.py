@@ -115,49 +115,35 @@ class Game:
             right_counts[index] = len([i for i in right_kills.values() if i >= index])
         g.step_count = len(steps)
         index = 0
-        found_hole = False
         while index < len(steps):
-            if (steps[index]['left'] == left_counts[index] and steps[index]['left_set'] == left_counts[index]) or steps[index]['left_set'] < left_counts[index]:
-                if found_hole:
-                    g.hole_count += 1
-                    g.left_hole_step_count += 1
-                    g.left_hole_steps.append(steps[index]['step'])
-                if steps[index]['left_set'] < left_counts[index]:
-                    found_hole = True
-                else:
-                    found_hole = False
-                index += 1
-                continue
-
-            if steps[index]['left'] > left_counts[index]:
+            if steps[index]['left'] == left_counts[index] and steps[index]['left_set'] == left_counts[index]:
+                pass
+            if steps[index]['left_set'] < left_counts[index]:
+                g.hole_count += 1
+                g.left_hole_step_count += 1
+                g.left_hole_steps.append(steps[index]['step'])
+            if steps[index]['left'] > steps[index]['left_set']:
                 g.black_hole_count += 1
                 g.left_black_step_count += 1
                 g.left_black_hole_steps.append(steps[index]['step'])
-                found_hole = False
-                index += 1
-                continue
+            index += 1
+            continue
 
         index = 0
-        found_hole = False
         while index < len(steps):
-            if (steps[index]['right'] == right_counts[index] and steps[index]['right_set'] == right_counts[index]) or steps[index]['right_set'] < right_counts[index]:
-                if found_hole:
-                    g.hole_count += 1
-                    g.right_hole_step_count += 1
-                    g.right_hole_steps.append(steps[index]['step'])
-                if steps[index]['right_set'] < right_counts[index]:
-                    found_hole = True
-                else:
-                    found_hole = False
-                index += 1
-                continue
-            if steps[index]['right'] > right_counts[index]:
+            if steps[index]['right'] == right_counts[index] and steps[index]['right_set'] == right_counts[index]:
+                pass
+            if steps[index]['right_set'] < right_counts[index]:
+                g.hole_count += 1
+                g.right_hole_step_count += 1
+                g.right_hole_steps.append(steps[index]['step'])
+            if steps[index]['right'] > steps[index]['right_set']:
                 g.black_hole_count += 1
                 g.right_black_step_count += 1
                 g.right_black_hole_steps.append(steps[index]['step'])
-                found_hole = False
-                index += 1
-                continue
+            index += 1
+            continue
+
         return g
 
 
@@ -201,10 +187,10 @@ class Team:
         hole_game: {self.hole_steps.keys()}
         black_hole_game: {self.black_hole_steps.keys()}
         '''
-        # r += f'''
-        # hole_game: {holes_step}
-        # black_hole_game: {black_holes_step}
-        # '''
+        r += f'''
+        hole_game: {holes_step}
+        black_hole_game: {black_holes_step}
+        '''
         return r
 
 import os
@@ -324,8 +310,8 @@ class HoleAnalyzer:
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    h = HoleAnalyzer('./sample_data', 1)
-    # h = HoleAnalyzer('./IranOpen2023', 30)
+    # h = HoleAnalyzer('./sample_data', 1)
+    h = HoleAnalyzer('./IranOpen2023/Starter-Junior/Log/SK/GsiKNvP_server2_CYRUS_4-vs-cyrus-girls_0.rcl', 1)
     # h = HoleAnalyzer('/home/nader/workspace/robo/SS2D-Docker-Tournament-Runner/log', 30)
     print(h)
     print(errors)
