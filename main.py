@@ -166,6 +166,7 @@ class Team:
         self.black_hole_count = 0
         self.hole_steps = {}
         self.black_hole_steps = {}
+        self.games = []
 
     def __str__(self):
         holes_step = ''
@@ -245,6 +246,8 @@ class HoleAnalyzer:
             self.games.append(p)
 
         for g in self.games:
+            if not g:
+                continue
             left_team = g.left_team
             right_team = g.right_team
             if left_team not in self.teams.keys():
@@ -252,6 +255,7 @@ class HoleAnalyzer:
             if right_team not in self.teams.keys():
                 self.teams[right_team] = Team(right_team)
             self.teams[left_team].game_count += 1
+            self.teams[left_team].games.append(g.rcl_path)
             if g.left_hole_step_count > 0:
                 self.teams[left_team].game_with_hole += 1
             if g.left_black_step_count > 0:
@@ -265,6 +269,7 @@ class HoleAnalyzer:
                 self.teams[left_team].black_hole_steps[g.rcl_path] = g.left_black_hole_steps
 
             self.teams[right_team].game_count += 1
+            self.teams[right_team].games.append(g.rcl_path)
             if g.right_hole_step_count > 0:
                 self.teams[right_team].game_with_hole += 1
             if g.right_black_step_count > 0:
@@ -283,6 +288,8 @@ class HoleAnalyzer:
         r += f'team count: {len(self.teams.keys())}\n'
         r += f'''{"#" * 20}'''
         for g in self.games:
+            if not g:
+                continue
             if g.hole_count > 0 or g.black_hole_count > 0:
                 r += str(g)
         r += f'''{"#" * 20}\n'''
@@ -313,13 +320,13 @@ class HoleAnalyzer:
             data[-1].append(v.hole_count)
             data[-1].append(v.black_hole_count)
             data[-1].append(v.black_hole_count + v.hole_count)
-        data.sort(key=lambda x: x[0], reverse=True)
+        data.sort(key=lambda x: str(x[0]).lower())
         print(tabulate(data, headers=headers, tablefmt='orgtbl'))
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    # h = HoleAnalyzer('./sample_data', 1)
-    h = HoleAnalyzer('./IranOpen2023/Starter-Junior/Log/SK/GsiKNvP_server2_CYRUS_4-vs-cyrus-girls_0.rcl', 1)
+    h = HoleAnalyzer('./sample_data', 1)
+    # h = HoleAnalyzer('./IranOpen2022/', 30)
     # h = HoleAnalyzer('/home/nader/workspace/robo/SS2D-Docker-Tournament-Runner/log', 30)
     print(h)
     print(errors)
