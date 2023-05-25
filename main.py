@@ -115,6 +115,7 @@ class Game:
             right_counts[index] = len([i for i in right_kills.values() if i >= index])
         g.step_count = len(steps)
         index = 0
+        last_hole = -1
         while index < len(steps):
             if steps[index]['left'] == left_counts[index] and steps[index]['left_set'] == left_counts[index]:
                 pass
@@ -122,7 +123,8 @@ class Game:
                 g.hole_count += 1
                 g.left_hole_step_count += 1
                 g.left_hole_steps.append(steps[index]['step'])
-            if steps[index]['left'] > steps[index]['left_set']:
+                last_hole = index
+            if steps[index]['left'] > steps[index]['left_set'] and last_hole == index - 1:
                 g.black_hole_count += 1
                 g.left_black_step_count += 1
                 g.left_black_hole_steps.append(steps[index]['step'])
@@ -130,14 +132,18 @@ class Game:
             continue
 
         index = 0
+        last_hole = -1
         while index < len(steps):
             if steps[index]['right'] == right_counts[index] and steps[index]['right_set'] == right_counts[index]:
                 pass
             if steps[index]['right_set'] < right_counts[index]:
+                print(steps[index])
                 g.hole_count += 1
                 g.right_hole_step_count += 1
                 g.right_hole_steps.append(steps[index]['step'])
-            if steps[index]['right'] > steps[index]['right_set']:
+                last_hole = index
+            if steps[index]['right'] > steps[index]['right_set'] and last_hole == index - 1:
+                print('black', steps[index])
                 g.black_hole_count += 1
                 g.right_black_step_count += 1
                 g.right_black_hole_steps.append(steps[index]['step'])
