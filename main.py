@@ -53,6 +53,8 @@ class Game:
         for line in lines:
             if left_team != '' and right_team != '':
                 break
+            if str(line).find('referee') > -1:
+                continue
             team = ''.join(line[2].split('_')[:-1])
             if left_team == '':
                 left_team = team
