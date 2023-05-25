@@ -45,7 +45,6 @@ class Game:
 
     @staticmethod
     def read_rcl(rcl_path):
-        print(rcl_path)
         lines = open(rcl_path, 'r').readlines()
         lines = [line.replace('\t', ' ').split(' ') for line in lines]
         left_team = ''
