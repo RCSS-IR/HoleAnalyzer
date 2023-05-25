@@ -355,6 +355,35 @@ class HoleAnalyzer:
             data[-1].append(v.black_hole_count + v.hole_count)
         data.sort(key=lambda x: str(x[0]).lower())
         print(tabulate(data, headers=headers, tablefmt='orgtbl'))
+    
+    def print_csv(self):
+        headers = [
+                    'team_name',
+                    'game',
+                    'game_hole',
+                    'game_black_hole',
+                    'step',
+                    'hole',
+                    'black_hole',
+                    'all_hole'
+        ]
+        data = []
+        for t, v in self.teams.items():
+            data.append([])
+            data[-1].append(v.team_name)
+            data[-1].append(v.game_count)
+            data[-1].append(v.game_with_hole)
+            data[-1].append(v.game_with_black_hole)
+            data[-1].append(v.step_count)
+            data[-1].append(v.hole_count)
+            data[-1].append(v.black_hole_count)
+            data[-1].append(v.black_hole_count + v.hole_count)
+        data.sort(key=lambda x: str(x[0]).lower())
+        
+        print(','.join(headers))
+        for d in data:
+            print(','.join(map(str, d)))
+        # print(tabulate(data, headers=headers, tablefmt='orgtbl'))
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -363,7 +392,7 @@ if __name__ == '__main__':
     # h = HoleAnalyzer('/home/nader/workspace/robo/SS2D-Docker-Tournament-Runner/log', 30)
     print(h)
     print(errors)
-    h.print_table()
+    h.print_csv()
     # g = Game.read_rcl('sample_data/GGHv1WP_server1_Robo2D_1-vs-YuShan2023_4.rcl')
     # pri
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
