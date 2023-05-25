@@ -69,6 +69,8 @@ class Game:
         step = ''
         left_agents = []
         right_agents = []
+        left_main_actions = []
+        right_main_actions = []
         steps = []
         for line in lines:
             if line[0].startswith('0'):
@@ -82,19 +84,26 @@ class Game:
                     steps.append({'step': step,
                                   'left': len(left_agents), 'left_set': len(set(left_agents)),
                                   'left_agents': copy.copy(left_agents),
+                                  'left_actions': copy.copy(left_main_actions),
                                   'right': len(right_agents), 'right_set': len(set(right_agents)),
-                                  'right_agents': copy.copy(right_agents)})
+                                  'right_agents': copy.copy(right_agents),
+                                  'right_actions': copy.copy(right_main_actions)})
                     left_agents.clear()
                     right_agents.clear()
+                    left_main_actions.clear()
+                    right_main_actions.clear()
 
                 step = line[0]
             team = ''.join(line[2].split('_')[:-1])
             agent = line[2].split('_')[-1]
+            actions = ' '.join(line[3:])
             if agent != 'Coach' and agent != 'Coach:':
                 if team == left_team:
                     left_agents.append(int(agent.replace(':', '')))
+                    left_main_actions.append(actions)
                 else:
                     right_agents.append(int(agent.replace(':', '')))
+                    right_main_actions.append(actions)
         left_kills = {}
         for u in range(1, 12):
             for index in range(len(steps) - 1, -1, -1):
@@ -114,13 +123,40 @@ class Game:
         right_counts = {}
         for index in range(len(steps)):
             right_counts[index] = len([i for i in right_kills.values() if i >= index])
+
+        left_freeze = [[] for _ in range(11)]
+        for index in range(len(steps)):
+            for action, unum in zip(steps[index]['left_actions'], steps[index]['left_agents']):
+                if len(left_freeze[unum-1]) > 0 and index - left_freeze[unum-1][-1] < 10:
+                    continue
+                if 'tackle' in action:
+                    left_freeze[unum-1].append(index)
+        left_may_freeze = [0 for s in steps]
+        for p_t in left_freeze:
+            for s in p_t:
+                for i in range(s, min(s + 10, len(steps))):
+                    left_may_freeze[i] += 1
+
+        right_freeze = [[] for _ in range(11)]
+        for index in range(len(steps)):
+            for action, unum in zip(steps[index]['right_actions'], steps[index]['right_agents']):
+                if len(right_freeze[unum - 1]) > 0 and index - right_freeze[unum - 1][-1] < 10:
+                    continue
+                if 'tackle' in action:
+                    right_freeze[unum - 1].append(index)
+        right_may_freeze = [0 for s in steps]
+        for p_t in right_freeze:
+            for s in p_t:
+                for i in range(s, min(s + 10, len(steps))):
+                    right_may_freeze[i] += 1
+
         g.step_count = len(steps)
         index = 0
         last_hole = -1
         while index < len(steps):
             if steps[index]['left'] == left_counts[index] and steps[index]['left_set'] == left_counts[index]:
                 pass
-            if steps[index]['left_set'] < left_counts[index]:
+            if steps[index]['left_set'] < left_counts[index] - left_may_freeze[index]:
                 g.hole_count += 1
                 g.left_hole_step_count += 1
                 g.left_hole_steps.append(steps[index]['step'])
@@ -137,14 +173,12 @@ class Game:
         while index < len(steps):
             if steps[index]['right'] == right_counts[index] and steps[index]['right_set'] == right_counts[index]:
                 pass
-            if steps[index]['right_set'] < right_counts[index]:
-                print(steps[index])
+            if steps[index]['right_set'] < right_counts[index] - right_may_freeze[index]:
                 g.hole_count += 1
                 g.right_hole_step_count += 1
                 g.right_hole_steps.append(steps[index]['step'])
                 last_hole = index
             if steps[index]['right'] > steps[index]['right_set'] and last_hole == index - 1:
-                print('black', steps[index])
                 g.black_hole_count += 1
                 g.right_black_step_count += 1
                 g.right_black_hole_steps.append(steps[index]['step'])
