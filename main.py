@@ -332,6 +332,8 @@ class HoleAnalyzer:
         return r
 
     def print_table(self):
+        if 'WLF' in self.teams.keys():
+            del self.teams['WLF']
         headers = [
                     'team_name',
                     'game',
@@ -340,7 +342,9 @@ class HoleAnalyzer:
                     'step',
                     'hole',
                     'black_hole',
-                    'all_hole'
+                    'all_hole',
+                    'ave_hole',
+                    'ave_black_hole'
         ]
         data = []
         for t, v in self.teams.items():
@@ -353,10 +357,26 @@ class HoleAnalyzer:
             data[-1].append(v.hole_count)
             data[-1].append(v.black_hole_count)
             data[-1].append(v.black_hole_count + v.hole_count)
+            data[-1].append(round(v.hole_count / v.game_count, 2))
+            data[-1].append(round(v.black_hole_count / v.game_count, 2))
         data.sort(key=lambda x: str(x[0]).lower())
+        data.append([
+            'AVE',
+            sum(v.game_count for v in self.teams.values()),
+            sum(v.game_with_hole for v in self.teams.values()),
+            sum(v.game_with_black_hole for v in self.teams.values()),
+            sum(v.step_count for v in self.teams.values()),
+            sum(v.hole_count for v in self.teams.values()),
+            sum(v.black_hole_count for v in self.teams.values()),
+            sum(v.black_hole_count + v.hole_count for v in self.teams.values()),
+            round(sum(v.hole_count for v in self.teams.values()) / sum(v.game_count for v in self.teams.values()), 2),
+            round(sum(v.black_hole_count for v in self.teams.values()) / sum(v.game_count for v in self.teams.values()), 2),
+        ])
         print(tabulate(data, headers=headers, tablefmt='orgtbl'))
     
-    def print_csv(self):
+    def print_csv(self, file_name=''):
+        if 'WLF' in self.teams.keys():
+            del self.teams['WLF']
         headers = [
                     'team_name',
                     'game',
@@ -365,7 +385,9 @@ class HoleAnalyzer:
                     'step',
                     'hole',
                     'black_hole',
-                    'all_hole'
+                    'all_hole',
+                    'ave_hole',
+                    'ave_black_hole'
         ]
         data = []
         for t, v in self.teams.items():
@@ -378,21 +400,45 @@ class HoleAnalyzer:
             data[-1].append(v.hole_count)
             data[-1].append(v.black_hole_count)
             data[-1].append(v.black_hole_count + v.hole_count)
+            data[-1].append(round(v.hole_count / v.game_count, 2))
+            data[-1].append(round(v.black_hole_count / v.game_count, 2))
         data.sort(key=lambda x: str(x[0]).lower())
-        
-        print(','.join(headers))
-        for d in data:
-            print(','.join(map(str, d)))
+        data.append([
+            'AVE',
+            sum(v.game_count for v in self.teams.values()),
+            sum(v.game_with_hole for v in self.teams.values()),
+            sum(v.game_with_black_hole for v in self.teams.values()),
+            sum(v.step_count for v in self.teams.values()),
+            sum(v.hole_count for v in self.teams.values()),
+            sum(v.black_hole_count for v in self.teams.values()),
+            sum(v.black_hole_count + v.hole_count for v in self.teams.values()),
+            round(sum(v.hole_count for v in self.teams.values()) / sum(v.game_count for v in self.teams.values()), 2),
+            round(sum(v.black_hole_count for v in self.teams.values()) / sum(v.game_count for v in self.teams.values()), 2),
+        ])
+        if len(file_name) > 0:
+            res = ','.join(headers) + '\n'
+            for d in data:
+                res += ','.join(map(str, d))
+                res += '\n'
+            f = open(file_name, 'w')
+            f.write(res)
+            f.close()
+        else:
+            print(','.join(headers))
+            for d in data:
+                print(','.join(map(str, d)))
         # print(tabulate(data, headers=headers, tablefmt='orgtbl'))
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    h = HoleAnalyzer('./sample_data', 1)
+    d = 'IranOpen2023'
+    h = HoleAnalyzer('./' + d, 30)
     # h = HoleAnalyzer('./IranOpen2022/', 30)
     # h = HoleAnalyzer('/home/nader/workspace/robo/SS2D-Docker-Tournament-Runner/log', 30)
     print(h)
     print(errors)
-    h.print_csv()
+    h.print_csv(d + '.csv')
+    h.print_table()
     # g = Game.read_rcl('sample_data/GGHv1WP_server1_Robo2D_1-vs-YuShan2023_4.rcl')
     # pri
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
