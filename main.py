@@ -431,7 +431,7 @@ class HoleAnalyzer:
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    d = 'IranOpen2023'
+    d = 'data'
     h = HoleAnalyzer('./' + d, 30)
     # h = HoleAnalyzer('./IranOpen2022/', 30)
     # h = HoleAnalyzer('/home/nader/workspace/robo/SS2D-Docker-Tournament-Runner/log', 30)
