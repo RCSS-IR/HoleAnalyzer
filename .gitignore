@@ -1,0 +1,8 @@
+venv
+data/*
+!data/README.md
+output/*
+!output/README.md
+__pycache__/*
+.code
+.idea
