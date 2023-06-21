@@ -1,4 +1,4 @@
-team_name,game,game_hole,game_black_hole,step,hole,black_hole,all_hole,ave_hole,ave_black_hole
+team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
 Alice,23,11,11,150469,14,14,28,0.61,0.61
 CSUYunlu,21,12,12,139854,20,20,40,0.95,0.95
 CYRUS,22,8,8,144932,18,18,36,0.82,0.82
@@ -16,4 +16,4 @@ PersianGulf2017,21,13,13,142093,30,28,58,1.43,1.33
 Ri-one,21,8,8,143052,14,14,28,0.67,0.67
 WIT,21,16,16,144823,28,28,56,1.33,1.33
 Ziziphus,21,15,15,139234,35,35,70,1.67,1.67
-AVE,358,190,190,2382878,2130,816,2946,5.95,2.28
+Total,358,190,190,2382878,2130,816,2946,5.95,2.28

@@ -1,4 +1,4 @@
-team_name,game,game_hole,game_black_hole,step,hole,black_hole,all_hole,ave_hole,ave_black_hole
+team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
 2DJunior,3,2,0,21436,20,0,20,6.67,0.0
 Andromeda,2,2,0,13554,29,0,29,14.5,0.0
 Atalanta,1,1,0,6404,6,0,6,6.0,0.0
@@ -15,4 +15,4 @@ Namira,3,0,0,20395,0,0,0,0.0,0.0
 Nexus2d,8,1,1,53774,13,9,22,1.62,1.12
 Razi,2,0,0,13080,0,0,0,0.0,0.0
 Riton,3,0,0,21099,0,0,0,0.0,0.0
-AVE,62,25,1,430200,343,9,352,5.53,0.15
+Total,62,25,1,430200,343,9,352,5.53,0.15

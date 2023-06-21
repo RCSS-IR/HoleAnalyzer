@@ -1,4 +1,4 @@
-team_name,game,game_hole,game_black_hole,step,hole,black_hole,all_hole,ave_hole,ave_black_hole
+team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
 CYRUS2019,22,0,0,146255,0,0,0,0.0,0.0
 FCPGPR2018NS,20,0,0,140625,0,0,0,0.0,0.0
 FRA-UNIted,20,0,0,132464,0,0,0,0.0,0.0
@@ -14,4 +14,4 @@ Ri-one,21,20,19,143487,930,311,1241,44.29,14.81
 RoboCIn,22,0,0,154237,0,0,0,0.0,0.0
 Titas2019,20,0,0,136005,0,0,0,0.0,0.0
 YuShan2019,21,3,3,139414,9,8,17,0.43,0.38
-AVE,312,23,22,2113752,939,319,1258,3.01,1.02
+Total,312,23,22,2113752,939,319,1258,3.01,1.02

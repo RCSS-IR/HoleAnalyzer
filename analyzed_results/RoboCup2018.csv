@@ -1,4 +1,4 @@
-team_name,game,game_hole,game_black_hole,step,hole,black_hole,all_hole,ave_hole,ave_black_hole
+team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
 Alice,19,0,0,125870,0,0,0,0.0,0.0
 CYRUS2018,17,0,0,113913,0,0,0,0.0,0.0
 FCPGPR2018,15,3,3,101759,4,4,8,0.27,0.27
@@ -12,4 +12,4 @@ Oxsy,18,0,0,120133,0,0,0,0.0,0.0
 Razi2018,17,2,0,117017,2,0,2,0.12,0.0
 Ri-one,16,0,0,108791,0,0,0,0.0,0.0
 YuShan,19,0,0,126012,0,0,0,0.0,0.0
-AVE,232,16,9,1558886,1011,587,1598,4.36,2.53
+Total,232,16,9,1558886,1011,587,1598,4.36,2.53

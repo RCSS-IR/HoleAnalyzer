@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import csv
 import os
 
-path = 'analyze_results'
+path = '../analyzed_results'
 files = os.listdir(path)
 
 results = {}
@@ -23,10 +23,9 @@ for f in files:
         d[team['team_name']] = dd
     results[f.split('.')[0]] = d
 
-
 avg_holes = []
 for r in results.keys():
-    avg_holes.append([r, results[r]['AVE']['ave_hole'], results[r]['AVE']['ave_black_hole']])
+    avg_holes.append([r, results[r]['Total']['avg_hole'], results[r]['Total']['avg_black_hole']])
 avg_holes.sort(key=lambda x: x[0])
 fig, ax = plt.subplots()
 ax.scatter([h[0] for h in avg_holes], [float(h[1]) for h in avg_holes])
@@ -40,9 +39,9 @@ data = []
 for r in results.keys():
     data.append([r, []])
     for team in results[r].keys():
-        if team == 'AVE':
+        if team == 'Total':
             continue
-        data[-1][-1].append(float(results[r][team]['ave_black_hole']) + 0.001)
+        data[-1][-1].append(float(results[r][team]['avg_black_hole']) + 0.001)
 data.sort(key=lambda x: x[0])
 print(data)
 ax.boxplot([d[1] for d in data])
@@ -62,9 +61,9 @@ for r in results.keys():
     label.append(r)
     data.append([r, []])
     for team in results[r].keys():
-        if team == 'AVE':
+        if team == 'Total':
             continue
-        data[-1][-1].append(float(results[r][team]['ave_black_hole']))
+        data[-1][-1].append(float(results[r][team]['avg_black_hole']))
 data.sort(key=lambda x: x[0])
 print(data)
 data2 = []

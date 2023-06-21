@@ -1,4 +1,4 @@
-team_name,game,game_hole,game_black_hole,step,hole,black_hole,all_hole,ave_hole,ave_black_hole
+team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
 AETeam,10,9,0,70210,68,0,68,6.8,0.0
 Austras2D,10,10,0,65800,67,0,67,6.7,0.0
 Conar2D,13,0,0,87550,0,0,0,0.0,0.0
@@ -18,4 +18,4 @@ RoboCIn,14,0,0,94427,0,0,0,0.0,0.0
 TheBenchwarmers,12,0,12,103431,0,12,12,0.0,1.0
 ThunderLeague,11,0,0,77565,0,0,0,0.0,0.0
 YuShan2021,14,3,3,94048,4,3,7,0.29,0.21
-AVE,242,65,39,1676754,6766,3030,9796,27.96,12.52
+Total,242,65,39,1676754,6766,3030,9796,27.96,12.52

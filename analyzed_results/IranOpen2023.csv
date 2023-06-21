@@ -1,4 +1,4 @@
-team_name,game,game_hole,game_black_hole,step,hole,black_hole,all_hole,ave_hole,ave_black_hole
+team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
 ADT,14,9,0,94755,224,0,224,16.0,0.0
 aeteam,20,13,0,137729,251,0,251,12.55,0.0
 ALIANCE,18,16,0,126724,285,0,285,15.83,0.0
@@ -40,4 +40,4 @@ TNT,18,12,0,120923,296,0,296,16.44,0.0
 Xprogrammers,18,12,0,129367,222,0,222,12.33,0.0
 YuShan2023,23,3,2,158097,15,13,28,0.65,0.57
 Zina-AI,24,14,13,170059,22,17,39,0.92,0.71
-AVE,743,388,96,5127485,7217,1317,8534,9.71,1.77
+Total,743,388,96,5127485,7217,1317,8534,9.71,1.77

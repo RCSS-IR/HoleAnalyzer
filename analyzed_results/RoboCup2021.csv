@@ -1,4 +1,4 @@
-team_name,game,game_hole,game_black_hole,step,hole,black_hole,all_hole,ave_hole,ave_black_hole
+team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
 Alice2021,35,0,0,235382,0,0,0,0.0,0.0
 ARAS,35,0,0,245700,0,0,0,0.0,0.0
 Austras2D,35,16,0,264061,60,0,60,1.71,0.0
@@ -15,4 +15,4 @@ Persepolis,35,0,0,242902,0,0,0,0.0,0.0
 RoboCIn,36,0,0,247861,0,0,0,0.0,0.0
 ThunderLeague,36,0,0,250037,0,0,0,0.0,0.0
 YuShan2021,36,0,0,242514,0,0,0,0.0,0.0
-AVE,574,38,1,3975788,186,1,187,0.32,0.0
+Total,574,38,1,3975788,186,1,187,0.32,0.0

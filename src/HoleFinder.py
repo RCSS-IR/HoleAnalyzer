@@ -110,14 +110,14 @@ class HoleAnalyzer:
         headers = [
             'team_name',
             'game',
-            'game_hole',
-            'game_black_hole',
-            'step',
+            'games_w_holes',
+            'games_w_black_holes',
+            # 'step',
             'hole',
             'black_hole',
             'all_hole',
-            'ave_hole',
-            'ave_black_hole'
+            'avg_hole',
+            'avg_black_hole'
         ]
         data = []
         for t, v in self.teams.items():
@@ -126,7 +126,7 @@ class HoleAnalyzer:
             data[-1].append(v.game_count)
             data[-1].append(v.game_with_hole)
             data[-1].append(v.game_with_black_hole)
-            data[-1].append(v.step_count)
+            # data[-1].append(v.step_count)
             data[-1].append(v.hole_count)
             data[-1].append(v.black_hole_count)
             data[-1].append(v.black_hole_count + v.hole_count)
@@ -134,11 +134,11 @@ class HoleAnalyzer:
             data[-1].append(round(v.black_hole_count / v.game_count, 2))
         data.sort(key=lambda x: str(x[0]).lower())
         data.append([
-            'AVE',
+            'Total',
             sum(v.game_count for v in self.teams.values()),
             sum(v.game_with_hole for v in self.teams.values()),
             sum(v.game_with_black_hole for v in self.teams.values()),
-            sum(v.step_count for v in self.teams.values()),
+            # sum(v.step_count for v in self.teams.values()),
             sum(v.hole_count for v in self.teams.values()),
             sum(v.black_hole_count for v in self.teams.values()),
             sum(v.black_hole_count + v.hole_count for v in self.teams.values()),
@@ -147,7 +147,7 @@ class HoleAnalyzer:
             round(sum(v.black_hole_count for v in self.teams.values()) /
                   sum(v.game_count for v in self.teams.values()), 2),
         ])
-        print(tabulate(data, headers=headers, tablefmt='orgtbl'))
+        print(tabulate(data, headers=headers, tablefmt='pretty', colalign=('center',)))
 
     def to_json(self):
         if 'WLF' in self.teams.keys():
@@ -156,56 +156,57 @@ class HoleAnalyzer:
         for t, v in self.teams.items():
             data.append({
                 'team_name': v.team_name,
-                'game': v.game_count,
-                'game_hole': v.game_with_hole,
-                'game_black_hole': v.game_with_black_hole,
-                'step': v.step_count,
+                'games': v.game_count,
+                'games_w_holes': v.game_with_hole,
+                'games_w_black_holes': v.game_with_black_hole,
+                # 'step': v.step_count,
                 'hole': v.hole_count,
                 'black_hole': v.black_hole_count,
                 'all_hole': v.black_hole_count + v.hole_count,
-                'ave_hole': round(v.hole_count / v.game_count, 2),
-                'ave_black_hole': round(v.black_hole_count / v.game_count, 2),
+                'avg_hole': round(v.hole_count / v.game_count, 2),
+                'avg_black_hole': round(v.black_hole_count / v.game_count, 2),
             })
         data.sort(key=lambda x: str(x['team_name']).lower())
         data = {
             'teams': data,
             'total': {
-                'game': sum(v.game_count for v in self.teams.values()),
-                'game_hole': sum(v.game_with_hole for v in self.teams.values()),
-                'game_black_hole': sum(v.game_with_black_hole for v in self.teams.values()),
-                'step': sum(v.step_count for v in self.teams.values()),
+                'games': sum(v.game_count for v in self.teams.values()),
+                'games_w_holes': sum(v.game_with_hole for v in self.teams.values()),
+                'games_w_black_holes': sum(v.game_with_black_hole for v in self.teams.values()),
+                # 'step': sum(v.step_count for v in self.teams.values()),
                 'hole': sum(v.hole_count for v in self.teams.values()),
                 'black_hole': sum(v.black_hole_count for v in self.teams.values()),
                 'all_hole': sum(v.black_hole_count + v.hole_count for v in self.teams.values()),
-                'ave_hole': round(sum(v.hole_count for v in self.teams.values()) / sum(v.game_count for v in self.teams.values()), 2),
-                'ave_black_hole': round(sum(v.black_hole_count for v in self.teams.values()) / sum(v.game_count for v in self.teams.values()), 2),
+                'avg_hole': round(sum(v.hole_count for v in self.teams.values()) / sum(v.game_count for v in self.teams.values()), 2),
+                'avg_black_hole': round(sum(v.black_hole_count for v in self.teams.values()) / sum(v.game_count for v in self.teams.values()), 2),
             }
         }
         return data
 
     def to_csv(self):
-        if 'WLF' in self.teams.keys():
-            del self.teams['WLF']
         headers = [
             'team_name',
-            'game',
-            'game_hole',
-            'game_black_hole',
-            'step',
-            'hole',
-            'black_hole',
-            'all_hole',
-            'ave_hole',
-            'ave_black_hole'
+            'games (G)',
+            'games_w_holes(GH)',
+            'games_w_black_holes(GBH)',
+            # 'steps_taken()',
+            'total_holes(TH)',
+            'total_black_holes(TBH)',
+            'all_hole(H+BH)',
+            'avg_hole(H/PG)',
+            'avg_black_holes(BH/PG)'
         ]
         data = []
+        if len(self.teams) == 0:
+            print("No Team found. exiting...")
+            exit()
         for t, v in self.teams.items():
             data.append([])
             data[-1].append(v.team_name)
             data[-1].append(v.game_count)
             data[-1].append(v.game_with_hole)
             data[-1].append(v.game_with_black_hole)
-            data[-1].append(v.step_count)
+            # data[-1].append(v.step_count)
             data[-1].append(v.hole_count)
             data[-1].append(v.black_hole_count)
             data[-1].append(v.black_hole_count + v.hole_count)
@@ -213,7 +214,7 @@ class HoleAnalyzer:
             data[-1].append(round(v.black_hole_count / v.game_count, 2))
         data.sort(key=lambda x: str(x[0]).lower())
         data.append([
-            'AVE',
+            'Total',
             sum(v.game_count for v in self.teams.values()),
             sum(v.game_with_hole for v in self.teams.values()),
             sum(v.game_with_black_hole for v in self.teams.values()),

@@ -1,4 +1,4 @@
-team_name,game,game_hole,game_black_hole,step,hole,black_hole,all_hole,ave_hole,ave_black_hole
+team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
 CYRUS,5,0,0,32924,0,0,0,0.0,0.0
 DML-2D,3,0,0,19850,0,0,0,0.0,0.0
 FCPGPR2020,3,1,1,20879,1,1,2,0.33,0.33
@@ -14,4 +14,4 @@ Razi,6,0,0,34422,0,0,0,0.0,0.0
 Ri-one,2,0,0,13174,0,0,0,0.0,0.0
 Riton,4,0,0,20629,0,0,0,0.0,0.0
 YuShan2020,3,0,0,13423,0,0,0,0.0,0.0
-AVE,60,3,3,376598,4,4,8,0.07,0.07
+Total,60,3,3,376598,4,4,8,0.07,0.07

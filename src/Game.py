@@ -56,7 +56,7 @@ class Game:
                 right_team = team
         if left_team == '' or right_team == '':
             print(f'{rcl_path} does not include left({left_team}) or right({right_team}).')
-            errors.append(f'{rcl_path} does not include left({left_team}) or right({right_team}).')
+            # errors.append(f'{rcl_path} does not include left({left_team}) or right({right_team}).')
             return None
             # raise Exception(f'{rcl_path} does not include left({left_team}) or right({right_team}).')
         g = Game(rcl_path, left_team, right_team)
