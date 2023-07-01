@@ -1,4 +1,4 @@
-team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
+team_name,game,games_w_holes,games_w_clashes,step,hole,clash,all_hole,avg_hole,avg_clash
 Alice2D,29,5,1,194316,9,1,10,0.31,0.03
 CYRUS,30,8,8,198547,22,16,38,0.73,0.53
 FRA-UNIted,29,25,23,190579,89,66,155,3.07,2.28

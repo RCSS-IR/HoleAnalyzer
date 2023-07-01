@@ -9,15 +9,15 @@ class Game:
         self.right_team: str = right_team
         self.step_count: int = 0
         self.hole_count: int = 0
-        self.black_hole_count: int = 0
+        self.clash_count: int = 0
         self.left_hole_step_count: int = 0
-        self.left_black_step_count: int = 0
+        self.left_clash_step_count: int = 0
         self.right_hole_step_count: int = 0
-        self.right_black_step_count: int = 0
+        self.right_clash_step_count: int = 0
         self.left_hole_steps: List[str] = []
-        self.left_black_hole_steps: List[str] = []
+        self.left_clash_steps: List[str] = []
         self.right_hole_steps: List[str] = []
-        self.right_black_hole_steps: List[str] = []
+        self.right_clash_steps: List[str] = []
 
     def __str__(self):
         res = f'''######
@@ -25,15 +25,15 @@ class Game:
         right_team: {self.right_team}
         step_count: {self.step_count}
         hole_count: {self.hole_count}
-        black_hole_count: {self.black_hole_count}
+        clash_count: {self.clash_count}
         left_hole_step_count: {self.left_hole_step_count}
-        left_black_step_count: {self.left_black_step_count}
+        left_clash_step_count: {self.left_clash_step_count}
         right_hole_step_count: {self.right_hole_step_count}
-        right_black_step_count: {self.right_black_step_count}
+        right_clash_step_count: {self.right_clash_step_count}
         left_hole_steps: {len(self.left_hole_steps)}
-        left_black_hole_steps: {len(self.left_black_hole_steps)}
+        left_clash_steps: {len(self.left_clash_steps)}
         right_hole_steps: {len(self.right_hole_steps)}
-        right_black_hole_steps: {len(self.right_black_hole_steps)}
+        right_clash_steps: {len(self.right_clash_steps)}
         '''
         return res
 
@@ -156,9 +156,9 @@ class Game:
                 g.left_hole_steps.append(steps[index]['step'])
                 last_hole = index
             if steps[index]['left'] > steps[index]['left_set'] and last_hole == index - 1:
-                g.black_hole_count += 1
-                g.left_black_step_count += 1
-                g.left_black_hole_steps.append(steps[index]['step'])
+                g.clash_count += 1
+                g.left_clash_step_count += 1
+                g.left_clash_steps.append(steps[index]['step'])
             index += 1
             continue
 
@@ -173,9 +173,9 @@ class Game:
                 g.right_hole_steps.append(steps[index]['step'])
                 last_hole = index
             if steps[index]['right'] > steps[index]['right_set'] and last_hole == index - 1:
-                g.black_hole_count += 1
-                g.right_black_step_count += 1
-                g.right_black_hole_steps.append(steps[index]['step'])
+                g.clash_count += 1
+                g.right_clash_step_count += 1
+                g.right_clash_steps.append(steps[index]['step'])
             index += 1
             continue
 

@@ -1,4 +1,4 @@
-team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
+team_name,game,games_w_holes,games_w_clashes,step,hole,clash,all_hole,avg_hole,avg_clash
 2DJunior,3,2,0,21436,20,0,20,6.67,0.0
 Andromeda,2,2,0,13554,29,0,29,14.5,0.0
 Atalanta,1,1,0,6404,6,0,6,6.0,0.0

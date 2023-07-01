@@ -1,4 +1,4 @@
-team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
+team_name,game,games_w_holes,games_w_clashes,step,hole,clash,all_hole,avg_hole,avg_clash
 AETeam,10,9,0,70210,68,0,68,6.8,0.0
 Austras2D,10,10,0,65800,67,0,67,6.7,0.0
 Conar2D,13,0,0,87550,0,0,0,0.0,0.0

@@ -1,4 +1,4 @@
-team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
+team_name,game,games_w_holes,games_w_clashes,step,hole,clash,all_hole,avg_hole,avg_clash
 AtomicEnergy,21,15,6,142054,179,39,218,8.52,1.86
 better-world,9,7,1,61319,79,1,80,8.78,0.11
 betterworld,4,2,0,28747,36,0,36,9.0,0.0

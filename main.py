@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from os import path
 from src.HoleFinder import HoleAnalyzer
 from typing import List, Dict

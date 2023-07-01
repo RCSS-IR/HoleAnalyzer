@@ -1,4 +1,4 @@
-team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
+team_name,game,games_w_holes,games_w_clashes,step,hole,clash,all_hole,avg_hole,avg_clash
 CYRUS2019,22,0,0,146255,0,0,0,0.0,0.0
 FCPGPR2018NS,20,0,0,140625,0,0,0,0.0,0.0
 FRA-UNIted,20,0,0,132464,0,0,0,0.0,0.0

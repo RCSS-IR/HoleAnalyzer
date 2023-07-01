@@ -1,4 +1,4 @@
-team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
+team_name,game,games_w_holes,games_w_clashes,step,hole,clash,all_hole,avg_hole,avg_clash
 Adrenaline,18,18,1,125432,419,1,420,23.28,0.06
 AEteam,17,16,1,125907,3584,4,3588,210.82,0.24
 agent2d,18,0,0,125304,0,0,0,0.0,0.0

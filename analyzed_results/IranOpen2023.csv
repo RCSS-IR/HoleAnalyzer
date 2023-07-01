@@ -1,4 +1,4 @@
-team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
+team_name,game,games_w_holes,games_w_clashes,step,hole,clash,all_hole,avg_hole,avg_clash
 ADT,14,9,0,94755,224,0,224,16.0,0.0
 aeteam,20,13,0,137729,251,0,251,12.55,0.0
 ALIANCE,18,16,0,126724,285,0,285,15.83,0.0

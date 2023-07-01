@@ -64,29 +64,29 @@ class HoleAnalyzer:
             self.teams[left_team].games.append(g.rcl_path)
             if g.left_hole_step_count > 0:
                 self.teams[left_team].game_with_hole += 1
-            if g.left_black_step_count > 0:
-                self.teams[left_team].game_with_black_hole += 1
+            if g.left_clash_step_count > 0:
+                self.teams[left_team].game_with_clash += 1
             self.teams[left_team].step_count += g.step_count
             self.teams[left_team].hole_count += g.left_hole_step_count
-            self.teams[left_team].black_hole_count += g.left_black_step_count
+            self.teams[left_team].clash_count += g.left_clash_step_count
             if g.left_hole_step_count > 0:
                 self.teams[left_team].hole_steps[g.rcl_path] = g.left_hole_steps
-            if g.left_black_step_count > 0:
-                self.teams[left_team].black_hole_steps[g.rcl_path] = g.left_black_hole_steps
+            if g.left_clash_step_count > 0:
+                self.teams[left_team].clash_steps[g.rcl_path] = g.left_clash_steps
 
             self.teams[right_team].game_count += 1
             self.teams[right_team].games.append(g.rcl_path)
             if g.right_hole_step_count > 0:
                 self.teams[right_team].game_with_hole += 1
-            if g.right_black_step_count > 0:
-                self.teams[right_team].game_with_black_hole += 1
+            if g.right_clash_step_count > 0:
+                self.teams[right_team].game_with_clash += 1
             self.teams[right_team].step_count += g.step_count
             self.teams[right_team].hole_count += g.right_hole_step_count
-            self.teams[right_team].black_hole_count += g.right_black_step_count
+            self.teams[right_team].clash_count += g.right_clash_step_count
             if g.right_hole_step_count > 0:
                 self.teams[right_team].hole_steps[g.rcl_path] = g.right_hole_steps
-            if g.right_black_step_count > 0:
-                self.teams[right_team].black_hole_steps[g.rcl_path] = g.right_black_hole_steps
+            if g.right_clash_step_count > 0:
+                self.teams[right_team].clash_steps[g.rcl_path] = g.right_clash_steps
 
     def __str__(self):
         r = f'''{"#" * 20}'''
@@ -96,11 +96,11 @@ class HoleAnalyzer:
         for g in self.games:
             if not g:
                 continue
-            if g.hole_count > 0 or g.black_hole_count > 0:
+            if g.hole_count > 0 or g.clash_count > 0:
                 r += str(g)
         r += f'''{"#" * 20}\n'''
         for t, v in self.teams.items():
-            # if v.hole_count > 0 or v.black_hole_count > 0:
+            # if v.hole_count > 0 or v.clash_count > 0:
             r += str(v)
         return r
 
@@ -111,13 +111,13 @@ class HoleAnalyzer:
             'team_name',
             'game',
             'games_w_holes',
-            'games_w_black_holes',
+            'games_w_clashes',
             # 'step',
             'hole',
-            'black_hole',
+            'clash',
             'all_hole',
             'avg_hole',
-            'avg_black_hole'
+            'avg_clash'
         ]
         data = []
         for t, v in self.teams.items():
@@ -125,26 +125,26 @@ class HoleAnalyzer:
             data[-1].append(v.team_name)
             data[-1].append(v.game_count)
             data[-1].append(v.game_with_hole)
-            data[-1].append(v.game_with_black_hole)
+            data[-1].append(v.game_with_clash)
             # data[-1].append(v.step_count)
             data[-1].append(v.hole_count)
-            data[-1].append(v.black_hole_count)
-            data[-1].append(v.black_hole_count + v.hole_count)
+            data[-1].append(v.clash_count)
+            data[-1].append(v.clash_count + v.hole_count)
             data[-1].append(round(v.hole_count / v.game_count, 2))
-            data[-1].append(round(v.black_hole_count / v.game_count, 2))
+            data[-1].append(round(v.clash_count / v.game_count, 2))
         data.sort(key=lambda x: str(x[0]).lower())
         data.append([
             'Total',
             sum(v.game_count for v in self.teams.values()),
             sum(v.game_with_hole for v in self.teams.values()),
-            sum(v.game_with_black_hole for v in self.teams.values()),
+            sum(v.game_with_clash for v in self.teams.values()),
             # sum(v.step_count for v in self.teams.values()),
             sum(v.hole_count for v in self.teams.values()),
-            sum(v.black_hole_count for v in self.teams.values()),
-            sum(v.black_hole_count + v.hole_count for v in self.teams.values()),
+            sum(v.clash_count for v in self.teams.values()),
+            sum(v.clash_count + v.hole_count for v in self.teams.values()),
             round(sum(v.hole_count for v in self.teams.values()) /
                   sum(v.game_count for v in self.teams.values()), 2),
-            round(sum(v.black_hole_count for v in self.teams.values()) /
+            round(sum(v.clash_count for v in self.teams.values()) /
                   sum(v.game_count for v in self.teams.values()), 2),
         ])
         print(tabulate(data, headers=headers, tablefmt='pretty', colalign=('center',)))
@@ -158,13 +158,13 @@ class HoleAnalyzer:
                 'team_name': v.team_name,
                 'games': v.game_count,
                 'games_w_holes': v.game_with_hole,
-                'games_w_black_holes': v.game_with_black_hole,
+                'games_w_clashes': v.game_with_clash,
                 # 'step': v.step_count,
                 'hole': v.hole_count,
-                'black_hole': v.black_hole_count,
-                'all_hole': v.black_hole_count + v.hole_count,
+                'clash': v.clash_count,
+                'all_hole': v.clash_count + v.hole_count,
                 'avg_hole': round(v.hole_count / v.game_count, 2),
-                'avg_black_hole': round(v.black_hole_count / v.game_count, 2),
+                'avg_clash': round(v.clash_count / v.game_count, 2),
             })
         data.sort(key=lambda x: str(x['team_name']).lower())
         data = {
@@ -172,13 +172,13 @@ class HoleAnalyzer:
             'total': {
                 'games': sum(v.game_count for v in self.teams.values()),
                 'games_w_holes': sum(v.game_with_hole for v in self.teams.values()),
-                'games_w_black_holes': sum(v.game_with_black_hole for v in self.teams.values()),
+                'games_w_clashes': sum(v.game_with_clash for v in self.teams.values()),
                 # 'step': sum(v.step_count for v in self.teams.values()),
                 'hole': sum(v.hole_count for v in self.teams.values()),
-                'black_hole': sum(v.black_hole_count for v in self.teams.values()),
-                'all_hole': sum(v.black_hole_count + v.hole_count for v in self.teams.values()),
+                'clash': sum(v.clash_count for v in self.teams.values()),
+                'all_hole': sum(v.clash_count + v.hole_count for v in self.teams.values()),
                 'avg_hole': round(sum(v.hole_count for v in self.teams.values()) / sum(v.game_count for v in self.teams.values()), 2),
-                'avg_black_hole': round(sum(v.black_hole_count for v in self.teams.values()) / sum(v.game_count for v in self.teams.values()), 2),
+                'avg_clash': round(sum(v.clash_count for v in self.teams.values()) / sum(v.game_count for v in self.teams.values()), 2),
             }
         }
         return data
@@ -188,13 +188,13 @@ class HoleAnalyzer:
             'team_name',
             'games (G)',
             'games_w_holes(GH)',
-            'games_w_black_holes(GBH)',
+            'games_w_clashes(GBH)',
             # 'steps_taken()',
             'total_holes(TH)',
-            'total_black_holes(TBH)',
+            'total_clashes(TBH)',
             'all_hole(H+BH)',
             'avg_hole(H/PG)',
-            'avg_black_holes(BH/PG)'
+            'avg_clashes(BH/PG)'
         ]
         data = []
         if len(self.teams) == 0:
@@ -205,26 +205,26 @@ class HoleAnalyzer:
             data[-1].append(v.team_name)
             data[-1].append(v.game_count)
             data[-1].append(v.game_with_hole)
-            data[-1].append(v.game_with_black_hole)
+            data[-1].append(v.game_with_clash)
             # data[-1].append(v.step_count)
             data[-1].append(v.hole_count)
-            data[-1].append(v.black_hole_count)
-            data[-1].append(v.black_hole_count + v.hole_count)
+            data[-1].append(v.clash_count)
+            data[-1].append(v.clash_count + v.hole_count)
             data[-1].append(round(v.hole_count / v.game_count, 2))
-            data[-1].append(round(v.black_hole_count / v.game_count, 2))
+            data[-1].append(round(v.clash_count / v.game_count, 2))
         data.sort(key=lambda x: str(x[0]).lower())
         data.append([
             'Total',
             sum(v.game_count for v in self.teams.values()),
             sum(v.game_with_hole for v in self.teams.values()),
-            sum(v.game_with_black_hole for v in self.teams.values()),
-            sum(v.step_count for v in self.teams.values()),
+            sum(v.game_with_clash for v in self.teams.values()),
+            # sum(v.step_count for v in self.teams.values()),
             sum(v.hole_count for v in self.teams.values()),
-            sum(v.black_hole_count for v in self.teams.values()),
-            sum(v.black_hole_count + v.hole_count for v in self.teams.values()),
+            sum(v.clash_count for v in self.teams.values()),
+            sum(v.clash_count + v.hole_count for v in self.teams.values()),
             round(sum(v.hole_count for v in self.teams.values()) /
                   sum(v.game_count for v in self.teams.values()), 2),
-            round(sum(v.black_hole_count for v in self.teams.values()) /
+            round(sum(v.clash_count for v in self.teams.values()) /
                   sum(v.game_count for v in self.teams.values()), 2),
         ])
         return data, headers

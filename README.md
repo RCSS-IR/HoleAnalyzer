@@ -1,6 +1,6 @@
 # Python Hole Analyzer
 
-With using this project you can analyze a rcss competition rcl to see how many holes and black holes has been occurred in the competition.
+With using this project you can analyze a rcss competition rcl to see how many holes and clashes has been occurred in the competition.
 
 ## How to use
 

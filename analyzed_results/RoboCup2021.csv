@@ -1,4 +1,4 @@
-team_name,game,games_w_holes,games_w_black_holes,step,hole,black_hole,all_hole,avg_hole,avg_black_hole
+team_name,game,games_w_holes,games_w_clashes,step,hole,clash,all_hole,avg_hole,avg_clash
 Alice2021,35,0,0,235382,0,0,0,0.0,0.0
 ARAS,35,0,0,245700,0,0,0,0.0,0.0
 Austras2D,35,16,0,264061,60,0,60,1.71,0.0
