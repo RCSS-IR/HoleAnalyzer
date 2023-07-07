@@ -97,5 +97,6 @@ for c in data:
 for d in data2:
     plt.plot(d)
 plt.legend([l[0] for l in data])
-plt.xticks(list(range(10)), ['0', '1', '2', '3', '4', '5', '6-10', '11-20', '21-30', '31-'])
+plt.xticks(list(range(10)), ['0', '1', '2', '3', '4', '5', '6-10', '11-20', '21-30', '>31'])
 plt.show()
+print('END')

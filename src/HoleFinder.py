@@ -186,15 +186,15 @@ class HoleAnalyzer:
     def to_csv(self):
         headers = [
             'team_name',
-            'games (G)',
-            'games_w_holes(GH)',
-            'games_w_clashes(GBH)',
-            # 'steps_taken()',
-            'total_holes(TH)',
-            'total_clashes(TBH)',
-            'all_hole(H+BH)',
-            'avg_hole(H/PG)',
-            'avg_clashes(BH/PG)'
+            'games',
+            'games_w_holes',
+            'games_w_clashes',
+            'steps',
+            'hole',
+            'clash',
+            'all_hole',
+            'avg_hole',
+            'avg_clash'
         ]
         data = []
         if len(self.teams) == 0:
@@ -206,7 +206,7 @@ class HoleAnalyzer:
             data[-1].append(v.game_count)
             data[-1].append(v.game_with_hole)
             data[-1].append(v.game_with_clash)
-            # data[-1].append(v.step_count)
+            data[-1].append(v.step_count)
             data[-1].append(v.hole_count)
             data[-1].append(v.clash_count)
             data[-1].append(v.clash_count + v.hole_count)
@@ -218,7 +218,7 @@ class HoleAnalyzer:
             sum(v.game_count for v in self.teams.values()),
             sum(v.game_with_hole for v in self.teams.values()),
             sum(v.game_with_clash for v in self.teams.values()),
-            # sum(v.step_count for v in self.teams.values()),
+            sum(v.step_count for v in self.teams.values()),
             sum(v.hole_count for v in self.teams.values()),
             sum(v.clash_count for v in self.teams.values()),
             sum(v.clash_count + v.hole_count for v in self.teams.values()),
