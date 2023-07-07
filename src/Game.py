@@ -1,6 +1,6 @@
 from typing import List
 import copy 
-
+DEBUG = False #True
 class Game:
     
     def __init__(self, rcl_path, left_team, right_team):
@@ -65,15 +65,17 @@ class Game:
         right_agents = []
         left_main_actions = []
         right_main_actions = []
+        cycle = []
         steps = []
         for line in lines:
-            if line[0].startswith('0'):
+            if line[0].startswith('0') or line[0].startswith('3000') or line[0].startswith('6000') or line[0].startswith('7000'):
                 continue
-            if line[0].startswith('6000'):
+            if line[0].startswith('8000'):
                 break
             if line[1].startswith('(referee'):
                 continue
             if step != line[0]:
+                cycle = 0
                 if step != '':
                     steps.append({'step': step,
                                   'left': len(left_agents), 'left_set': len(set(left_agents)),
@@ -81,12 +83,14 @@ class Game:
                                   'left_actions': copy.copy(left_main_actions),
                                   'right': len(right_agents), 'right_set': len(set(right_agents)),
                                   'right_agents': copy.copy(right_agents),
-                                  'right_actions': copy.copy(right_main_actions)})
+                                  'right_actions': copy.copy(right_main_actions),
+                                  'cycle': line[0].split(',')[0],
+                                  'subcycle': line[0].split(',')[1]})
                     left_agents.clear()
                     right_agents.clear()
                     left_main_actions.clear()
                     right_main_actions.clear()
-
+            
                 step = line[0]
             team = ''.join(line[2].split('_')[:-1])
             agent = line[2].split('_')[-1]
@@ -151,11 +155,15 @@ class Game:
             if steps[index]['left'] == left_counts[index] and steps[index]['left_set'] == left_counts[index]:
                 pass
             if steps[index]['left_set'] < left_counts[index] - left_may_freeze[index]:
+                if DEBUG:
+                    print('left H at S', steps[index]['cycle'], steps[index]['subcycle']) #DEBUG
                 g.hole_count += 1
                 g.left_hole_step_count += 1
                 g.left_hole_steps.append(steps[index]['step'])
                 last_hole = index
             if steps[index]['left'] > steps[index]['left_set'] and last_hole == index - 1:
+                if DEBUG:
+                    print('left C at S', steps[index]['cycle'], steps[index]['subcycle']) #DEBUG
                 g.clash_count += 1
                 g.left_clash_step_count += 1
                 g.left_clash_steps.append(steps[index]['step'])
@@ -168,15 +176,20 @@ class Game:
             if steps[index]['right'] == right_counts[index] and steps[index]['right_set'] == right_counts[index]:
                 pass
             if steps[index]['right_set'] < right_counts[index] - right_may_freeze[index]:
+                if DEBUG:
+                    print('right H at S', steps[index]['cycle'], steps[index]['subcycle']) #DEBUG
                 g.hole_count += 1
                 g.right_hole_step_count += 1
                 g.right_hole_steps.append(steps[index]['step'])
                 last_hole = index
             if steps[index]['right'] > steps[index]['right_set'] and last_hole == index - 1:
+                if DEBUG:
+                    print('right C at S', steps[index]['cycle'], steps[index]['subcycle']) #DEBUG
                 g.clash_count += 1
                 g.right_clash_step_count += 1
                 g.right_clash_steps.append(steps[index]['step'])
             index += 1
             continue
-
+        if DEBUG:
+            print(g) #DEBUG
         return g
