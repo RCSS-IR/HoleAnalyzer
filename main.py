@@ -6,7 +6,7 @@ from typing import List, Dict
 
 if __name__ == '__main__':
     data_path = path.join(path.dirname(__file__), 'data')
-    h = HoleAnalyzer(data_path, 30)
+    h = HoleAnalyzer(data_path, 20)
     
     output_path = path.join(path.dirname(__file__), 'output')
     h.output_csv(path.join(output_path, 'output.csv'))

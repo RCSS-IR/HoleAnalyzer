@@ -43,7 +43,7 @@ for r in results.keys():
             continue
         data[-1][-1].append(float(results[r][team]['avg_clash']) + 0.001)
 data.sort(key=lambda x: x[0])
-print(data)
+# print(data)
 ax.boxplot([d[1] for d in data])
 plt.xticks([i + 1 for i in range(len(results.keys()))], [i[0] for i in data])
 i=1
@@ -65,7 +65,7 @@ for r in results.keys():
             continue
         data[-1][-1].append(float(results[r][team]['avg_clash']))
 data.sort(key=lambda x: x[0])
-print(data)
+# print(data)
 data2 = []
 for c in data:
     data2.append([0] * 10)
@@ -99,4 +99,4 @@ for d in data2:
 plt.legend([l[0] for l in data])
 plt.xticks(list(range(10)), ['0', '1', '2', '3', '4', '5', '6-10', '11-20', '21-30', '>31'])
 plt.show()
-print('END')
+# print('END')

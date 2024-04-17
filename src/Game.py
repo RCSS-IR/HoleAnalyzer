@@ -1,6 +1,6 @@
 from typing import List
 import copy 
-DEBUG = False #True
+DEBUG = False # True # False #
 class Game:
     
     def __init__(self, rcl_path, left_team, right_team):
@@ -39,6 +39,7 @@ class Game:
 
     @staticmethod
     def read_rcl(rcl_path):
+        # print(f'processing {rcl_path}...')
         lines = open(rcl_path, 'r').readlines()
         lines = [line.replace('\t', ' ').split(' ') for line in lines]
         left_team = ''

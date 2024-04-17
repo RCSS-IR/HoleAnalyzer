@@ -45,6 +45,7 @@ class HoleAnalyzer:
     def analyze(self, path):
         self.find_file(path)
         pool = Pool(self.thread)
+        # print(path)
         pool_out = pool.map(Game.read_rcl, self.paths)
         for p in pool_out:
             # for p in self.paths:
@@ -52,6 +53,7 @@ class HoleAnalyzer:
             self.games.append(p)
 
         for g in self.games:
+            # print(g)
             if not g:
                 continue
             left_team = g.left_team
